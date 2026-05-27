@@ -1,248 +1,1365 @@
 <!DOCTYPE html>
+<!--
+  BHOOMI SHARMA — PR Portfolio Website
+  =====================================
+  Built as a single HTML file — no frameworks, no dependencies except Google Fonts.
+  Everything lives in one file so you only need to upload ONE file to GitHub.
+
+  STRUCTURE OF THIS FILE:
+  1. <head>       — fonts, page title, all CSS styles
+  2. <nav>        — fixed top navigation bar
+  3. #home        — hero section (first thing visitors see)
+  4. #about       — who you are + skills
+  5. #experience  — your internship timeline
+  6. #portfolio   — your work samples with filter buttons
+  7. #education   — your degrees
+  8. #writing     — your LinkedIn articles
+  9. #contact     — contact section
+  10. <footer>    — bottom strip
+  11. <script>    — small JavaScript for scroll effects and portfolio filter
+-->
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bhoomi Sharma — PR & Communications</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- UTF-8 charset means all characters (Hindi, special symbols) display correctly -->
+  <meta charset="UTF-8">
+
+  <!-- viewport meta: makes the site resize properly on mobile phones -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- This is what appears in the browser tab and Google search results -->
+  <title>Bhoomi Sharma — PR & Communications Professional</title>
+
+  <!-- 
+    Google Fonts: we load TWO fonts.
+    1. "Plus Jakarta Sans" — a clean, modern, highly legible sans-serif.
+       Used for ALL text on the site: headings, body, nav, buttons.
+       WHY THIS FONT: It reads as confident and current. Used by many
+       corporate and consulting firms. Not decorative, not generic.
+    2. No serif font this time — previous design used Cormorant Garamond
+       which looked like a fashion magazine. PR firms want clarity, not flair.
+    
+    font-display=swap: shows text immediately using system font while
+    Google font loads, so the page never shows invisible text.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --navy:       #0F2340;
-    --navy-mid:   #1A3C5E;
-    --blue:       #2563EB;
-    --blue-light: #DBEAFE;
-    --gold:       #C9A84C;
-    --gold-light: #FDF6E3;
-    --cream:      #FAF8F5;
-    --warm-grey:  #F0EDE8;
-    --mid-grey:   #9CA3AF;
-    --dark-text:  #1C1C1E;
-    --body-text:  #374151;
-    --border:     #E5E1DA;
-    --white:      #FFFFFF;
-  }
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
-  body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--dark-text); overflow-x: hidden; }
-  .serif { font-family: 'Cormorant Garamond', serif; }
-  h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; line-height: 1.15; }
 
+/* ======================================================
+   CSS VARIABLES (Design Tokens)
+   ======================================================
+   Variables let us define colours ONCE and reuse them
+   everywhere. If you want to change the blue to a
+   different shade, you change it here — it updates
+   across the entire site automatically.
+
+   HOW TO READ: --variable-name: value;
+   HOW TO USE:  color: var(--navy);
+   ====================================================== */
+:root {
+  /* PRIMARY COLOURS */
+  --navy:        #0D1F35;   /* Deepest navy — used for main headings, navbar bg, buttons */
+  --navy-hover:  #162C4A;   /* Slightly lighter navy — used on button hover states */
+  --steel:       #1E3A5F;   /* Mid-navy — used for section backgrounds, borders */
+
+  /* ACCENT COLOUR */
+  --accent:      #1D6FA4;   /* Professional blue — used for links, tags, active states */
+                             /* WHY BLUE not gold: blue = trust, clarity, competence.
+                                Gold reads as luxury/decorative. PR firms are blue. */
+
+  /* NEUTRAL COLOURS */
+  --white:       #FFFFFF;   /* Pure white */
+  --off-white:   #F8FAFB;   /* Very slightly cool white — main page background */
+  --light-grey:  #F1F4F7;   /* Light grey — used for card backgrounds, section alternates */
+  --border:      #DDE3EA;   /* Light grey-blue border colour for dividers and card edges */
+
+  /* TEXT COLOURS */
+  --text-dark:   #0D1F35;   /* Same as navy — used for headings and important text */
+  --text-body:   #3D5068;   /* Dark blue-grey — used for body paragraphs */
+  --text-muted:  #7A90A4;   /* Lighter grey-blue — used for dates, labels, metadata */
+  --text-white:  #FFFFFF;   /* White text — used on dark/navy backgrounds */
+}
+
+/* ======================================================
+   RESET & BASE
+   ======================================================
+   These rules remove browser default styles that differ
+   between Chrome, Firefox, Safari etc., so our site
+   looks the same everywhere.
+   ====================================================== */
+
+/* box-sizing: border-box means padding is INCLUDED in
+   the element's width, not added on top. Makes layout
+   much more predictable and easier to calculate. */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;    /* remove all default margins */
+  padding: 0;   /* remove all default padding */
+}
+
+/* scroll-behavior: smooth makes clicking a nav link
+   smoothly scroll to that section instead of jumping */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Base body styles applied to everything on the page */
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif; /* our chosen font */
+  background: var(--off-white);                  /* very light background */
+  color: var(--text-body);                       /* default text colour */
+  overflow-x: hidden;                            /* prevent horizontal scroll on mobile */
+  line-height: 1.6;                              /* comfortable reading line spacing */
+}
+
+/* ======================================================
+   NAVIGATION BAR
+   ======================================================
+   Fixed to the top of the screen — stays visible as
+   you scroll. This is the standard for portfolio sites
+   because it lets visitors jump to any section easily.
+   ====================================================== */
+nav {
+  position: fixed;      /* "fixed" = stays in place when page scrolls */
+  top: 0;               /* pinned to very top */
+  left: 0;              /* full width starts from left edge */
+  right: 0;             /* stretches to right edge */
+  z-index: 1000;        /* z-index controls stacking order; 1000 means it floats above everything */
+  height: 68px;         /* height of the navbar strip */
+  display: flex;                          /* flex = puts children (logo + links) in a row */
+  align-items: center;                    /* vertically centres logo and links */
+  justify-content: space-between;         /* logo on left, links on right */
+  padding: 0 6vw;                         /* 6vw = 6% of screen width — horizontal breathing room */
+  background: var(--navy);               /* solid dark navy background */
+  border-bottom: 1px solid var(--steel); /* subtle bottom border to define the navbar edge */
+}
+
+/* The "Bhoomi Sharma" logo text on the left of the navbar */
+.nav-logo {
+  font-size: 1.05rem;        /* not too large — confident but not shouting */
+  font-weight: 700;          /* bold — makes the name stand out */
+  color: var(--white);       /* white text on dark navbar */
+  text-decoration: none;     /* remove the default underline on links */
+  letter-spacing: 0.01em;    /* very slight letter spacing for readability */
+}
+
+/* The list that holds all nav links (About, Experience, etc.) */
+.nav-links {
+  display: flex;       /* puts all links in a horizontal row */
+  align-items: center; /* vertically centres them */
+  gap: 2.5rem;         /* space between each link */
+  list-style: none;    /* removes default bullet points from <ul> */
+}
+
+/* Individual nav link styling */
+.nav-links a {
+  font-size: 0.78rem;          /* small — nav links should not compete with page content */
+  font-weight: 500;            /* medium weight */
+  letter-spacing: 0.07em;      /* spaced out letters — a standard for nav links */
+  text-transform: uppercase;   /* ALL CAPS nav links is the PR/corporate standard */
+  color: rgba(255,255,255,0.7); /* slightly transparent white — not as loud as logo */
+  text-decoration: none;       /* no underline */
+  transition: color 0.2s;      /* smooth colour change on hover */
+}
+
+/* When hovering over a nav link, make it bright white */
+.nav-links a:hover {
+  color: var(--white);
+}
+
+/* The "Contact" button — styled differently to draw attention */
+.nav-cta {
+  background: var(--accent);   /* blue background — stands out from the navy bar */
+  color: var(--white) !important; /* white text — ! important overrides the link colour above */
+  padding: 0.5rem 1.25rem;    /* internal spacing — makes it look like a button */
+  border-radius: 3px;          /* very slightly rounded corners */
+  font-size: 0.75rem !important;
+  transition: background 0.2s;
+}
+.nav-cta:hover {
+  background: #155E8A; /* darker blue on hover */
+}
+
+/* ======================================================
+   HERO SECTION (#home)
+   ======================================================
+   This is the most important section — first thing
+   every visitor sees. Goal: communicate who Bhoomi is,
+   what she does, and where to go next — in under 5 seconds.
+
+   LAYOUT: Two equal columns side by side.
+   Left column: Text content (name, title, description, buttons)
+   Right column: Photo + a clean credentials panel
+
+   WHY TWO COLUMNS: Standard for professional portfolios.
+   Text on left = natural reading direction. Photo on right
+   confirms it's a real person with a face, not a template.
+   ====================================================== */
+#home {
+  min-height: 100vh;              /* fills the full screen height on first load */
+  display: grid;                  /* CSS Grid for the two-column layout */
+  grid-template-columns: 1.1fr 0.9fr; /* left column slightly wider than right */
+  padding-top: 68px;              /* pushes content below the fixed navbar */
+}
+
+/* LEFT COLUMN — all the text content */
+.hero-left {
+  display: flex;            /* flex column = stacks children vertically */
+  flex-direction: column;
+  justify-content: center;  /* vertically centres all content in the column */
+  padding: 5rem 5vw 5rem 6vw; /* top, right, bottom, left — generous but not wasteful */
+  background: var(--white); /* clean white background — professional, readable */
+}
+
+/* 
+  AVAILABILITY BADGE
+  A small pill at the top of the hero to immediately
+  communicate she is available and where.
+  WHY THIS: PR hiring managers scan fast. This badge
+  answers "is she available in South India?" before
+  they even read the name.
+*/
+.hero-availability {
+  display: inline-flex;            /* inline so it only takes the width of its content */
+  align-items: center;
+  gap: 0.5rem;
+  background: #EBF5EE;             /* very light green — green = available/go */
+  border: 1px solid #A8D5B2;       /* light green border */
+  color: #1A6B30;                  /* dark green text */
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  border-radius: 3px;
+  margin-bottom: 1.75rem;          /* space between badge and name */
+  width: fit-content;              /* only as wide as the text */
+}
+
+/* The green dot before the text — shows "live/active" status */
+.avail-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;              /* makes the div a circle */
+  background: #1A6B30;             /* same green as text */
+}
+
+/* 
+  THE NAME — most important element on the page
+  Uses ONE font, ONE colour, ONE weight.
+  No italic, no gold, no mixed styling.
+  WHY: Previous version used italic gold for "Sharma" — 
+  looked like a perfume brand. PR professionals need to
+  look like professionals, not designers.
+*/
+.hero-name {
+  font-size: clamp(2.8rem, 5vw, 4.2rem); /* clamp(min, preferred, max) — scales with screen */
+  font-weight: 800;                /* extra bold — the name is the focal point */
+  color: var(--navy);              /* deepest navy — authoritative */
+  line-height: 1.1;                /* tight line height for large display text */
+  letter-spacing: -0.02em;        /* slight negative spacing looks better at large sizes */
+  margin-bottom: 0.6rem;
+}
+
+/* The job title line below the name */
+.hero-role {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--accent);            /* blue — the accent colour draws the eye to this line */
+  letter-spacing: 0.04em;
+  text-transform: uppercase;       /* uppercase job titles are the PR/corporate standard */
+  margin-bottom: 1.5rem;
+}
+
+/* A thin horizontal divider line between title and description */
+.hero-divider {
+  width: 48px;                     /* short line — a design convention for section breaks */
+  height: 2px;
+  background: var(--accent);       /* same blue as the role text — visual consistency */
+  margin-bottom: 1.5rem;
+  border: none;
+}
+
+/* The descriptive paragraph below the divider */
+.hero-desc {
+  font-size: 1.0rem;
+  font-weight: 400;
+  line-height: 1.75;               /* generous line height for comfortable reading */
+  color: var(--text-body);
+  max-width: 460px;                /* constrains line length for readability */
+  margin-bottom: 2.25rem;
+}
+
+/* Bold text within the description */
+.hero-desc strong {
+  font-weight: 600;
+  color: var(--text-dark);         /* slightly darker than body text — draws the eye */
+}
+
+/* Container for the two buttons */
+.hero-actions {
+  display: flex;
+  gap: 1rem;       /* space between buttons */
+  flex-wrap: wrap; /* if screen is narrow, buttons wrap to next line */
+}
+
+/* PRIMARY BUTTON — solid navy background */
+.btn-primary {
+  background: var(--navy);
+  color: var(--white);
+  padding: 0.8rem 1.8rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 2px solid var(--navy);   /* border matches background — needed for outline button alignment */
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-primary:hover {
+  background: var(--navy-hover);   /* slightly lighter navy on hover */
+  border-color: var(--navy-hover);
+}
+
+/* OUTLINE BUTTON — transparent with navy border */
+.btn-outline {
+  background: transparent;
+  color: var(--navy);
+  padding: 0.8rem 1.8rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 2px solid var(--navy);   /* same size border as primary — they align perfectly */
+  border-radius: 3px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: background 0.2s, color 0.2s;
+}
+.btn-outline:hover {
+  background: var(--navy);         /* fills in on hover — inverse of primary */
+  color: var(--white);
+}
+
+/* RIGHT COLUMN — photo + credentials */
+.hero-right {
+  background: var(--light-grey);  /* light grey — clean, neutral, professional */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 3vw;
+  gap: 2rem;                      /* space between photo block and credentials block */
+}
+
+/* The photo frame */
+.photo-frame {
+  width: 240px;
+  height: 300px;
+  background: var(--border);      /* light grey placeholder — will show your photo */
+  border: 3px solid var(--white); /* white border around the photo — like a polaroid edge */
+  box-shadow: 0 4px 20px rgba(13,31,53,0.12); /* subtle shadow to lift the photo off the background */
+  overflow: hidden;               /* clips the image/content inside the frame */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* The initials placeholder inside the photo frame */
+.photo-initials {
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--text-muted);       /* muted grey — clearly a placeholder, not the real design */
+}
+.photo-placeholder-text {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 0 1rem;
+}
+
+/* 
+  CREDENTIALS PANEL
+  Three small white cards showing key stats.
+  WHY: These answer the three things a PR hiring manager
+  wants to verify immediately — institute credibility,
+  hands-on experience, and academic standing.
+  Placed below the photo so they are read AFTER seeing the face.
+*/
+.cred-panel {
+  width: 100%;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;                    /* small gap between each credential card */
+}
+
+/* Individual credential card */
+.cred-card {
+  background: var(--white);       /* white cards on light grey background = clear separation */
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent); /* left accent bar = visual anchor on the left edge */
+  padding: 0.75rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+/* The main text of each credential (e.g. "Rank 1 · IIMC Delhi") */
+.cred-main {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* The secondary label (e.g. "Academic Rank") */
+.cred-label {
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ======================================================
+   SHARED SECTION STYLES
+   ======================================================
+   Rules applied to ALL sections below the hero.
+   ====================================================== */
+
+/* Default padding for every section */
+section {
+  padding: 5.5rem 6vw;
+}
+
+/* The small uppercase label above each section title
+   (e.g. "About Me", "Experience") */
+.section-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);           /* blue — consistent accent colour throughout */
+  margin-bottom: 0.5rem;
+}
+
+/* The large heading for each section */
+.section-title {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  font-weight: 800;
+  color: var(--text-dark);
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+}
+
+/* Optional subtitle paragraph under section title */
+.section-sub {
+  font-size: 1rem;
+  color: var(--text-body);
+  max-width: 580px;
+  line-height: 1.7;
+  margin-bottom: 3rem;
+}
+
+/* ======================================================
+   ABOUT SECTION
+   ====================================================== */
+#about {
+  background: var(--white); /* alternates with off-white — visual rhythm */
+}
+
+/* Two columns: photo/facts on left, text on right */
+.about-grid {
+  display: grid;
+  grid-template-columns: 260px 1fr; /* fixed width left column, flexible right */
+  gap: 4rem;
+  align-items: start;               /* align to top, not centre */
+  margin-top: 2.5rem;
+}
+
+/* Left column: small photo box + fact rows */
+.about-sidebar {}
+
+/* Smaller photo box for the about section */
+.about-photo {
+  width: 240px;
+  height: 280px;
+  background: var(--light-grey);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--border);
+}
+
+/* Fact rows below the photo (Based in: / Available: etc.) */
+.about-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;                     /* space between each row */
+}
+
+.fact-item {
+  display: flex;
+  gap: 0.6rem;
+  font-size: 0.83rem;
+  color: var(--text-body);
+  align-items: flex-start;
+}
+
+/* The label part of each fact row (e.g. "Available") */
+.fact-label {
+  font-weight: 700;
+  color: var(--text-dark);
+  min-width: 76px;                  /* fixed width so all values align in a column */
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding-top: 1px;
+}
+
+/* Right column: paragraphs + skills */
+.about-content {}
+
+.about-text p {
+  font-size: 0.97rem;
+  line-height: 1.8;
+  color: var(--text-body);
+  margin-bottom: 1.1rem;           /* space between paragraphs */
+}
+
+.about-text p strong {
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+/* Skills pills section */
+.skills-block {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border); /* divider separates text from skills */
+}
+
+.skills-heading {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+  margin-bottom: 0.85rem;
+}
+
+/* Wrapping row of skill pills */
+.skills-wrap {
+  display: flex;
+  flex-wrap: wrap;                  /* wrap to next line when row is full */
+  gap: 0.5rem;
+}
+
+/* Individual skill pill */
+.skill-pill {
+  background: var(--light-grey);
+  border: 1px solid var(--border);
+  color: var(--text-dark);
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 0.35rem 0.85rem;
+  border-radius: 3px;
+  transition: all 0.15s;
+}
+
+.skill-pill:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--white);
+}
+
+/* Download CV button row below skills */
+.about-cta {
+  margin-top: 1.75rem;
+}
+
+/* ======================================================
+   EXPERIENCE SECTION
+   ====================================================== */
+#experience {
+  background: var(--off-white); /* alternates background */
+}
+
+/* Stack of experience items */
+.exp-list {
+  margin-top: 0.5rem;
+}
+
+/* Individual experience row */
+.exp-item {
+  display: grid;
+  grid-template-columns: 200px 1fr; /* left = date/org meta, right = role + bullets */
+  gap: 2.5rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--border); /* top border on each row = clean divider */
+}
+
+.exp-item:last-child {
+  border-bottom: 1px solid var(--border); /* close off the last item */
+}
+
+/* Left column: date and organisation */
+.exp-meta {}
+
+.exp-period {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);             /* blue date = visual anchor */
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.exp-org {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Right column: role title + bullet points */
+.exp-content {}
+
+.exp-role {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.75rem;
+}
+
+/* List of bullet points for each experience */
+.exp-bullets {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.exp-bullets li {
+  font-size: 0.88rem;
+  color: var(--text-body);
+  line-height: 1.65;
+  padding-left: 1.25rem;           /* indent to make room for the dash */
+  position: relative;              /* needed for the absolute-positioned dash */
+}
+
+/* The dash before each bullet point */
+.exp-bullets li::before {
+  content: '–';                    /* en-dash, more refined than a hyphen */
+  position: absolute;
+  left: 0;
+  color: var(--accent);            /* blue dashes — consistent accent colour */
+  font-weight: 500;
+}
+
+/* ======================================================
+   PORTFOLIO SECTION
+   ====================================================== */
+#portfolio {
+  background: var(--white);
+}
+
+/* Filter button row */
+.filter-bar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  margin-top: -1rem;               /* pulls filter bar closer to subtitle */
+}
+
+.filter-btn {
+  background: var(--light-grey);
+  border: 1px solid var(--border);
+  color: var(--text-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 0.45rem 1rem;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Plus Jakarta Sans', sans-serif; /* ensure font matches rest of page */
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: var(--accent);       /* blue when active or hovered */
+  border-color: var(--accent);
+  color: var(--white);
+}
+
+/* 3-column grid of portfolio cards */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* exactly 3 equal columns */
+  gap: 1.25rem;
+}
+
+/* Individual portfolio card */
+.port-card {
+  background: var(--light-grey);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--border); /* top border — will change to accent on hover */
+  padding: 1.5rem;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  transition: border-top-color 0.2s, box-shadow 0.2s, transform 0.15s;
+}
+
+.port-card:hover {
+  border-top-color: var(--accent);  /* blue top bar appears on hover — professional indicator */
+  box-shadow: 0 4px 16px rgba(13,31,53,0.08);
+  transform: translateY(-2px);      /* very subtle lift — not flashy, just responsive */
+}
+
+/* Category tag at top of card (e.g. "Media Release") */
+.port-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+
+/* Portfolio piece title */
+.port-title {
+  font-size: 1.0rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+/* Short description */
+.port-desc {
+  font-size: 0.82rem;
+  color: var(--text-body);
+  line-height: 1.6;
+  flex: 1;                          /* takes remaining space — pushes the link to the bottom */
+}
+
+/* "View PDF" link at the bottom of card */
+.port-action {
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+/* Coming soon text */
+.port-soon {
+  margin-top: 1.25rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ======================================================
+   HOW TO ADD PDF LINKS TO PORTFOLIO CARDS
+   ======================================================
+   STEP 1: Write your piece (media release, crisis analysis etc.)
+           Save it as a PDF on your computer.
+
+   STEP 2: Go to drive.google.com
+           Click "New" → "File Upload" → select your PDF
+           Wait for it to upload
+
+   STEP 3: Right-click the uploaded file in Drive
+           Click "Share"
+           Under "General access" change "Restricted" to
+           "Anyone with the link" → click "Copy link"
+
+   STEP 4: You will get a link like:
+           https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQ/view?usp=sharing
+
+   STEP 5: In this HTML file, find the portfolio card
+           for that piece. Change:
+               href="#"
+           to:
+               href="https://drive.google.com/file/d/1AbCdEfGhIjKlMnOpQ/view?usp=sharing"
+
+   STEP 6: Change the .port-soon paragraph to .port-action
+           and change the text from "PDF uploading soon"
+           to "View PDF →"
+
+   STEP 7: Save index.html and re-upload to GitHub.
+           Changes go live in 1-2 minutes.
+   ====================================================== */
+
+/* ======================================================
+   EDUCATION SECTION
+   ====================================================== */
+#education {
+  background: var(--off-white);
+}
+
+.edu-list {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;                        /* space between education cards */
+}
+
+/* Individual education card */
+.edu-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent); /* blue left bar = consistent with credentials panel */
+  padding: 1.5rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr auto;  /* title/degree left, score/year right */
+  align-items: start;
+  gap: 1.5rem;
+}
+
+.edu-inst {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.3rem;
+}
+
+.edu-degree {
+  font-size: 0.87rem;
+  color: var(--text-body);
+  margin-bottom: 0.25rem;
+}
+
+.edu-note {
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Right side: year and score */
+.edu-meta {
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.25rem;
+}
+
+.edu-year {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.edu-score {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1;
+}
+
+/* ======================================================
+   WRITING SECTION
+   ====================================================== */
+#writing {
+  background: var(--white);
+}
+
+.writing-list {
+  margin-top: 0.5rem;
+}
+
+/* Individual article row */
+.article-row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto; /* number | title+meta | read link */
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.4rem 0;
+  border-top: 1px solid var(--border);
+}
+.article-row:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+/* The large number on the left (01, 02, 03) */
+.article-num {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--border);             /* very faint — purely decorative numbering */
+  line-height: 1;
+}
+
+.article-title {
+  font-size: 1.0rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.2rem;
+}
+
+.article-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.article-link {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.article-link:hover {
+  text-decoration: underline;
+}
+
+/* ======================================================
+   CONTACT SECTION
+   ====================================================== */
+#contact {
+  background: var(--navy);          /* dark navy — makes the contact section feel final/conclusive */
+  text-align: center;
+  padding: 6rem 6vw;
+}
+
+/* Availability badge — same style as hero but inverted colours */
+.contact-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 0.4rem 0.9rem;
+  border-radius: 3px;
+  margin-bottom: 2rem;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#contact .section-title {
+  color: var(--white);              /* white heading on dark background */
+  margin-bottom: 0.85rem;
+}
+
+.contact-sub {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+
+/* Row of contact buttons */
+.contact-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+/* Primary CTA button in contact — white background with navy text */
+.btn-contact-primary {
+  background: var(--white);
+  color: var(--navy);
+  padding: 0.85rem 2rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 2px solid var(--white);
+  border-radius: 3px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+}
+.btn-contact-primary:hover {
+  background: transparent;
+  color: var(--white);
+}
+
+/* Outline button in contact — transparent with white border */
+.btn-contact-outline {
+  background: transparent;
+  color: rgba(255,255,255,0.8);
+  padding: 0.85rem 2rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 3px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.2s;
+}
+.btn-contact-outline:hover {
+  border-color: var(--white);
+  color: var(--white);
+}
+
+/* The email address shown as large text below the buttons */
+.contact-email-display {
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.02em;
+}
+
+/* ======================================================
+   FOOTER
+   ====================================================== */
+footer {
+  background: #07121F;              /* even darker than navy — clearly the end of the page */
+  color: rgba(255,255,255,0.3);
+  text-align: center;
+  padding: 1.25rem 6vw;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  display: flex;
+  justify-content: space-between;  /* text on left, links on right */
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a {
+  color: rgba(255,255,255,0.3);
+  text-decoration: none;
+  font-size: 0.75rem;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: rgba(255,255,255,0.7);
+}
+
+/* ======================================================
+   FADE-IN ON SCROLL
+   ======================================================
+   Elements start invisible (opacity:0) and slightly
+   below their final position (translateY 20px down).
+   JavaScript below adds the .visible class when the
+   element scrolls into view, which triggers this
+   transition to make it appear smoothly.
+   ====================================================== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ======================================================
+   MOBILE RESPONSIVE STYLES
+   ======================================================
+   @media (max-width: 768px) means: apply these styles
+   ONLY when the screen is 768px wide or narrower.
+   This is the tablet/phone breakpoint.
+   ====================================================== */
+@media (max-width: 768px) {
+
+  /* Stack hero columns vertically on mobile */
+  #home {
+    grid-template-columns: 1fr;
+  }
+
+  /* Hide the right column (photo) on small screens
+     — the left column text is what matters on mobile */
+  .hero-right {
+    display: none;
+  }
+
+  .hero-left {
+    padding: 4rem 6vw 3.5rem;
+  }
+
+  /* Stack about columns vertically */
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  /* Hide about sidebar photo on mobile */
+  .about-sidebar {
+    display: none;
+  }
+
+  /* Single column portfolio on mobile */
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stack experience items vertically */
+  .exp-item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  /* Stack education cards */
+  .edu-card {
+    grid-template-columns: 1fr;
+  }
+  .edu-meta {
+    text-align: left;
+    align-items: flex-start;
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  /* Stack article rows vertically */
+  .article-row {
+    grid-template-columns: 1fr auto;
+  }
+  .article-num {
+    display: none;
+  }
+
+  /* Shrink nav padding on mobile */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 5vw; height: 64px;
-    background: rgba(250,248,245,0.92); backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border); transition: box-shadow 0.3s;
+    padding: 0 5vw;
   }
-  nav.scrolled { box-shadow: 0 2px 20px rgba(15,35,64,0.08); }
-  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: var(--navy); letter-spacing: 0.02em; text-decoration: none; }
-  .nav-links { display: flex; gap: 2rem; list-style: none; }
-  .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--body-text); text-decoration: none; transition: color 0.2s; position: relative; }
-  .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transition: transform 0.25s; }
-  .nav-links a:hover { color: var(--navy); }
-  .nav-links a:hover::after { transform: scaleX(1); }
-  .nav-cta { background: var(--navy); color: var(--white) !important; padding: 0.45rem 1.2rem; border-radius: 2px; font-size: 0.75rem !important; }
-  .nav-cta:hover { background: var(--navy-mid) !important; }
-  .nav-cta::after { display: none !important; }
 
-  #home { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 64px; overflow: hidden; }
-  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 6rem 5vw; }
-  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--gold-light); border: 1px solid var(--gold); color: #7A5C1E; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 2px; margin-bottom: 1.5rem; width: fit-content; }
-  .hero-name { font-size: clamp(3.5rem, 6vw, 5.5rem); color: var(--navy); line-height: 1.0; margin-bottom: 0.75rem; }
-  .hero-name em { font-style: italic; color: var(--gold); }
-  .hero-title { font-size: 1rem; font-weight: 400; color: var(--body-text); letter-spacing: 0.04em; margin-bottom: 1.5rem; text-transform: uppercase; }
-  .hero-desc { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 1.2rem; line-height: 1.75; color: var(--body-text); max-width: 480px; margin-bottom: 2.5rem; }
-  .hero-desc strong { font-weight: 600; color: var(--navy); }
-  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .btn-primary { background: var(--navy); color: var(--white); padding: 0.85rem 2rem; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border: none; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.15s; }
-  .btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); }
-  .btn-outline { background: transparent; color: var(--navy); padding: 0.85rem 2rem; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border: 1.5px solid var(--navy); border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.2s; }
-  .btn-outline:hover { background: var(--navy); color: var(--white); }
-  .hero-right { position: relative; display: flex; align-items: center; justify-content: center; background: var(--navy); overflow: hidden; }
-  .hero-photo-wrap { position: relative; z-index: 2; width: 320px; height: 420px; border: 3px solid rgba(201,168,76,0.4); overflow: hidden; }
-  .hero-photo-placeholder { width: 100%; height: 100%; background: linear-gradient(160deg, #1A3C5E 0%, #0F2340 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
-  .avatar-initials { width: 100px; height: 100px; border-radius: 50%; background: rgba(201,168,76,0.2); border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--gold); font-weight: 600; }
-  .hero-photo-placeholder p { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
-  .hero-deco-line { position: absolute; top: 0; bottom: 0; left: -30px; width: 1px; background: rgba(201,168,76,0.3); }
-  .hero-stats { position: absolute; bottom: 3rem; right: 3rem; z-index: 3; display: flex; flex-direction: column; gap: 1rem; }
-  .stat-chip { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); padding: 0.6rem 1rem; border-radius: 2px; text-align: right; }
-  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--gold); line-height: 1; }
-  .stat-lbl { font-size: 0.68rem; color: rgba(255,255,255,0.55); letter-spacing: 0.06em; text-transform: uppercase; }
-
-  section { padding: 6rem 5vw; }
-  .section-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
-  .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--gold); }
-  .section-title { font-size: clamp(2.2rem, 4vw, 3.2rem); color: var(--navy); margin-bottom: 1rem; }
-  .section-subtitle { font-size: 1.05rem; color: var(--body-text); max-width: 560px; line-height: 1.7; }
-
-  #about { background: var(--white); }
-  .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; margin-top: 3.5rem; }
-  .about-photo-box { width: 100%; aspect-ratio: 3/4; max-width: 340px; background: var(--warm-grey); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.75rem; color: var(--mid-grey); font-size: 0.85rem; }
-  .about-photo-box .big-initial { font-family: 'Cormorant Garamond', serif; font-size: 5rem; color: var(--border); line-height: 1; }
-  .about-facts { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
-  .fact-row { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.85rem; color: var(--body-text); }
-  .fact-row strong { min-width: 80px; font-weight: 500; color: var(--navy); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 1px; }
-  .about-text p { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; line-height: 1.8; color: var(--body-text); margin-bottom: 1.25rem; font-weight: 300; }
-  .about-text p strong { font-weight: 600; color: var(--navy); }
-  .skills-section { margin-top: 2.5rem; }
-  .skills-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid-grey); margin-bottom: 1rem; }
-  .skills-wrap { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .skill-pill { background: var(--cream); border: 1px solid var(--border); color: var(--navy); font-size: 0.78rem; font-weight: 400; padding: 0.35rem 0.9rem; border-radius: 40px; transition: all 0.2s; }
-  .skill-pill:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
-
-  #experience { background: var(--cream); }
-  .exp-grid { margin-top: 3.5rem; }
-  .exp-item { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; padding: 2rem 0; border-top: 1px solid var(--border); }
-  .exp-item:last-child { border-bottom: 1px solid var(--border); }
-  .exp-date { font-size: 0.75rem; font-weight: 500; color: var(--gold); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem; }
-  .exp-org { font-size: 0.82rem; color: var(--mid-grey); line-height: 1.4; }
-  .exp-role { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--navy); font-weight: 600; margin-bottom: 0.75rem; }
-  .exp-points { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
-  .exp-points li { font-size: 0.88rem; color: var(--body-text); line-height: 1.6; padding-left: 1.2rem; position: relative; }
-  .exp-points li::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-weight: 300; }
-
-  #portfolio { background: var(--navy); }
-  #portfolio .section-label { color: var(--gold); }
-  #portfolio .section-title { color: var(--white); }
-  #portfolio .section-subtitle { color: rgba(255,255,255,0.55); }
-  .filter-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 2.5rem; }
-  .filter-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.55); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 2px; cursor: pointer; transition: all 0.2s; font-family: 'Outfit', sans-serif; }
-  .filter-btn.active, .filter-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--navy); }
-  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
-  .port-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 1.75rem; border-radius: 2px; cursor: pointer; transition: all 0.25s; display: flex; flex-direction: column; text-decoration: none; }
-  .port-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
-  .port-tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.85rem; }
-  .port-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--white); margin-bottom: 0.6rem; line-height: 1.3; }
-  .port-desc { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.6; flex: 1; }
-  .port-link { margin-top: 1.25rem; font-size: 0.75rem; font-weight: 500; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; display: flex; align-items: center; gap: 0.4rem; }
-  .port-link::after { content: '→'; }
-  .port-coming { margin-top: 1.25rem; font-size: 0.72rem; color: rgba(255,255,255,0.25); font-style: italic; }
-
-  #education { background: var(--white); }
-  .edu-grid { margin-top: 3.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
-  .edu-card { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 1.5rem; padding: 1.75rem 2rem; border: 1px solid var(--border); border-left: 3px solid var(--gold); background: var(--cream); }
-  .edu-inst { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--navy); font-weight: 600; margin-bottom: 0.3rem; }
-  .edu-degree { font-size: 0.88rem; color: var(--body-text); margin-bottom: 0.3rem; }
-  .edu-note { font-size: 0.8rem; color: var(--gold); font-style: italic; }
-  .edu-meta { text-align: right; }
-  .edu-year { font-size: 0.75rem; color: var(--mid-grey); text-transform: uppercase; letter-spacing: 0.05em; }
-  .edu-score { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--navy); font-weight: 600; line-height: 1; }
-
-  #writing { background: var(--cream); }
-  .writing-grid { margin-top: 3rem; }
-  .writing-item { display: grid; grid-template-columns: 80px 1fr auto; gap: 1.5rem; align-items: center; padding: 1.5rem 0; border-top: 1px solid var(--border); }
-  .writing-item:last-child { border-bottom: 1px solid var(--border); }
-  .writing-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--border); font-weight: 600; line-height: 1; }
-  .writing-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--navy); font-weight: 600; margin-bottom: 0.25rem; }
-  .writing-meta { font-size: 0.78rem; color: var(--mid-grey); }
-  .writing-cta { font-size: 0.75rem; font-weight: 500; color: var(--blue); text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; white-space: nowrap; }
-
-  #contact { background: var(--navy); text-align: center; padding: 7rem 5vw; }
-  .contact-avail { display: inline-block; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); color: var(--gold); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 2px; margin-bottom: 2rem; }
-  #contact .section-title { color: var(--white); font-size: clamp(2.5rem,5vw,4rem); margin-bottom: 1rem; }
-  .contact-sub { font-size: 1rem; color: rgba(255,255,255,0.5); margin-bottom: 3rem; }
-  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-  .contact-btn { padding: 0.85rem 2rem; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 2px; text-decoration: none; transition: all 0.2s; display: inline-block; }
-  .contact-btn.gold { background: var(--gold); color: var(--navy); border: 1.5px solid var(--gold); }
-  .contact-btn.gold:hover { background: #B8973B; }
-  .contact-btn.outline { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.3); }
-  .contact-btn.outline:hover { border-color: white; }
-  .contact-divider { margin: 3.5rem auto; max-width: 80px; height: 1px; background: rgba(255,255,255,0.1); }
-  .contact-email { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: rgba(255,255,255,0.4); letter-spacing: 0.02em; }
-  footer { background: #080F18; color: rgba(255,255,255,0.3); text-align: center; padding: 1.5rem; font-size: 0.75rem; letter-spacing: 0.05em; }
-
-  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-  @media (max-width: 768px) {
-    #home { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
-    .hero-left { padding: 5rem 6vw 4rem; }
-    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .about-photo-box { display: none; }
-    .portfolio-grid { grid-template-columns: 1fr; }
-    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
-    .edu-card { grid-template-columns: 1fr; }
-    .edu-meta { text-align: left; }
-    .writing-item { grid-template-columns: 1fr; gap: 0.5rem; }
-    .writing-num { display: none; }
-    nav { padding: 0 4vw; }
-    .nav-links { gap: 1rem; }
-    .nav-links li:nth-child(-n+4) { display: none; }
+  /* On mobile, hide middle nav links — keep only the CTA */
+  .nav-links li:not(:last-child) {
+    display: none;
   }
+}
+
 </style>
 </head>
 <body>
 
+<!-- ======================================================
+     NAVIGATION BAR
+     ======================================================
+     position:fixed means this stays at the top of the
+     screen as the user scrolls. The "scrolled" class
+     is added by JavaScript when the user scrolls down —
+     it adds a subtle shadow to separate the nav from content.
+     ====================================================== -->
 <nav id="navbar">
+  <!-- Logo: your name, links back to top of page -->
   <a href="#home" class="nav-logo">Bhoomi Sharma</a>
+
+  <!-- Navigation links: each href="#sectionid" scrolls smoothly to that section -->
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#portfolio">Portfolio</a></li>
     <li><a href="#education">Education</a></li>
     <li><a href="#writing">Writing</a></li>
+    <!-- nav-cta = the blue "Contact" button, styled differently to draw attention -->
     <li><a href="#contact" class="nav-cta">Contact</a></li>
   </ul>
 </nav>
 
+
+<!-- ======================================================
+     HERO SECTION
+     ======================================================
+     This is the first thing every visitor sees.
+     Two columns: text left, photo+credentials right.
+     The goal: communicate who she is and what she does
+     in under 5 seconds.
+     ====================================================== -->
 <section id="home">
+
+  <!-- LEFT COLUMN: All text content -->
   <div class="hero-left">
-    <div class="hero-badge"><span>🥇</span> Rank 1 · IIMC New Delhi · ADPR</div>
-    <h1 class="hero-name">Bhoomi<br><em>Sharma</em></h1>
-    <p class="hero-title">PR &amp; Communications Professional</p>
-    <p class="hero-desc">I help brands <strong>say the right thing</strong> — to the right people, at the right moment. Currently supporting Google's PR team. Available for full-time roles in <strong>South India from July 2026.</strong></p>
+
+    <!-- Availability badge: small green pill at the very top
+         Answers "Is she available in South India?" immediately
+         before the visitor even reads the name -->
+    <div class="hero-availability">
+      <div class="avail-dot"></div>
+      Available · South India · July 2026
+    </div>
+
+    <!-- Name: ONE font, ONE colour, ONE weight.
+         No italic, no gold, no split styling.
+         font-weight:800 makes it dominant — it IS the headline. -->
+    <h1 class="hero-name">Bhoomi Sharma</h1>
+
+    <!-- Role title: UPPERCASE in accent blue draws the eye
+         after reading the name — what does she do? -->
+    <p class="hero-role">PR &amp; Communications Professional</p>
+
+    <!-- Short horizontal divider line: a clean visual break
+         between title and description paragraph.
+         48px wide, 2px tall, accent blue. -->
+    <hr class="hero-divider">
+
+    <!-- Description: 2–3 sentences.
+         Bold text highlights the key facts:
+         institute, current employer, target location. -->
+    <p class="hero-desc">
+      IIMC New Delhi (Rank 1) · Currently with <strong>Google's PR team</strong>.
+      Specialising in media monitoring, campaign planning, and brand communications
+      across tech, OTT, and policy sectors.
+      Actively relocating to <strong>Bengaluru · Chennai · Hyderabad.</strong>
+    </p>
+
+    <!-- Two buttons side by side.
+         Primary: solid navy — main call to action.
+         Outline: transparent navy border — secondary action. -->
     <div class="hero-actions">
       <a href="#portfolio" class="btn-primary">View My Work</a>
-      <a href="#contact" class="btn-outline">Let's Talk</a>
+      <a href="https://drive.google.com/your-cv-link" class="btn-outline" target="_blank">Download CV</a>
     </div>
-  </div>
-  <div class="hero-right">
-    <div class="hero-deco-line"></div>
-    <div class="hero-photo-wrap">
-      <div class="hero-photo-placeholder">
-        <div class="avatar-initials">BS</div>
-        <p>Add your photo here</p>
-      </div>
-    </div>
-    <div class="hero-stats">
-      <div class="stat-chip"><div class="stat-num">4+</div><div class="stat-lbl">Internships</div></div>
-      <div class="stat-chip"><div class="stat-num">200+</div><div class="stat-lbl">Survey Respondents Led</div></div>
-      <div class="stat-chip"><div class="stat-num">33+</div><div class="stat-lbl">Stakeholders Managed</div></div>
-    </div>
-  </div>
-</section>
 
-<section id="about">
-  <div class="fade-up">
-    <p class="section-label">About Me</p>
-    <h2 class="section-title">The communicator<br>behind the work</h2>
-  </div>
-  <div class="about-grid fade-up">
-    <div class="about-left">
-      <div class="about-photo-box">
-        <div class="big-initial">B</div>
-        <span>Your photo here</span>
-      </div>
-      <div class="about-facts">
-        <div class="fact-row"><strong>Based</strong> New Delhi → Relocating South India</div>
-        <div class="fact-row"><strong>Available</strong> July 2026 · Immediate joiner</div>
-        <div class="fact-row"><strong>Languages</strong> English · Hindi</div>
-        <div class="fact-row"><strong>Institute</strong> IIMC New Delhi</div>
-      </div>
+  </div><!-- end .hero-left -->
+
+
+  <!-- RIGHT COLUMN: Photo + credentials panel
+       Background is light grey — clearly distinct from the white left column.
+       No decorative lines, no gold backgrounds, no stats overlaid on photo.
+       Clean separation of elements. -->
+  <div class="hero-right">
+
+    <!-- Photo frame: white-bordered box.
+         When you have a photo, replace the inner div with an <img> tag.
+         HOW TO ADD PHOTO:
+         1. Name your photo file: photo.jpg
+         2. Upload photo.jpg to GitHub in the same folder as index.html
+         3. Replace the div.hero-photo-placeholder below with:
+            <img src="photo.jpg" alt="Bhoomi Sharma" style="width:100%;height:100%;object-fit:cover;object-position:top;">
+    -->
+    <div class="photo-frame">
+      <div class="photo-initials">BS</div>
+      <p class="photo-placeholder-text">Replace with<br>your photo</p>
     </div>
-    <div class="about-right">
-      <div class="about-text">
-        <p>I've always been drawn to the space between what organisations <strong>do</strong> and how the world <strong>understands</strong> them — that gap is where public relations lives.</p>
-        <p>Currently pursuing my PG Diploma in Advertising and PR at <strong>IIMC New Delhi</strong>, where I ranked first in my semester, I came to communications through a background in <strong>Political Science</strong> and a deep interest in how language shapes public perception.</p>
-        <p>Over the past two years I've worked across PR agencies, OTT platforms, research institutions, and tech firms — from supporting <strong>Google's PR team</strong> on media monitoring and influencer mapping, to leading campaign strategy for <strong>Prasar Bharati's WAVES OTT</strong>, to coordinating field research at <strong>IIT Madras</strong>.</p>
-        <p>I'm actively relocating to <strong>Bengaluru, Chennai, or Hyderabad</strong> and available for full-time PR and corporate communications roles from July 2026.</p>
+
+    <!-- Credentials panel: three cards below the photo.
+         Each card has a blue left border (consistent visual language).
+         These answer: Where did she study? Is she ranked? What experience?
+         Placed BELOW the photo — read after seeing the face. -->
+    <div class="cred-panel">
+
+      <div class="cred-card">
+        <!-- Main credential text -->
+        <span class="cred-main">🥇 Rank 1 · IIMC New Delhi</span>
+        <!-- Label describing what the main text refers to -->
+        <span class="cred-label">Academic Standing</span>
       </div>
-      <div class="skills-section">
-        <p class="skills-label">Core Skills</p>
+
+      <div class="cred-card">
+        <span class="cred-main">Google PR Team · Mavericks</span>
+        <span class="cred-label">Current Internship</span>
+      </div>
+
+      <div class="cred-card">
+        <span class="cred-main">4+ Internships · 2 Research Projects</span>
+        <span class="cred-label">Hands-on Experience</span>
+      </div>
+
+    </div><!-- end .cred-panel -->
+
+  </div><!-- end .hero-right -->
+
+</section><!-- end #home -->
+
+
+<!-- ======================================================
+     ABOUT SECTION
+     ======================================================
+     Two columns: sidebar (photo + facts) left, text right.
+     Three paragraphs: who she is, what she has done, what
+     she is looking for. Ends with skill pills + CV download.
+     ====================================================== -->
+<section id="about" class="fade-in">
+  <p class="section-eyebrow">About Me</p>
+  <h2 class="section-title">The communicator<br>behind the work</h2>
+
+  <div class="about-grid">
+
+    <!-- SIDEBAR: smaller photo + quick facts -->
+    <div class="about-sidebar">
+
+      <!-- Smaller photo — same placeholder logic as hero photo -->
+      <div class="about-photo">BS</div>
+
+      <!-- Quick-scan facts: hiring managers read these in 3 seconds -->
+      <div class="about-facts">
+        <div class="fact-item">
+          <span class="fact-label">Based</span>
+          <span>New Delhi → Relocating to South India</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-label">Available</span>
+          <span>July 2026 · Immediate joiner</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-label">Languages</span>
+          <span>English · Hindi</span>
+        </div>
+        <div class="fact-item">
+          <span class="fact-label">Institute</span>
+          <span>IIMC New Delhi</span>
+        </div>
+      </div>
+
+    </div><!-- end .about-sidebar -->
+
+    <!-- RIGHT: text paragraphs + skills -->
+    <div class="about-content">
+
+      <div class="about-text">
+        <!-- Para 1: who she is and what drove her to PR -->
+        <p>I've always been drawn to the space between what organisations <strong>do</strong> and how the world <strong>understands</strong> them — that gap is where public relations lives. Currently pursuing my PG Diploma in Advertising and PR at <strong>IIMC New Delhi</strong>, where I ranked first in my semester.</p>
+
+        <!-- Para 2: what she has done (brief, story-form) -->
+        <p>Over the past two years I've worked across PR agencies, OTT platforms, research institutions, and tech firms — from supporting <strong>Google's PR team</strong> on media monitoring and influencer mapping, to leading campaign strategy for <strong>Prasar Bharati's WAVES OTT</strong>, to coordinating field research at <strong>IIT Madras</strong>.</p>
+
+        <!-- Para 3: what she wants — direct, no ambiguity -->
+        <p>I'm actively relocating to <strong>Bengaluru, Chennai, or Hyderabad</strong> and looking for a full-time PR or corporate communications role from July 2026.</p>
+      </div>
+
+      <!-- Skills block: horizontal row of pills
+           Separated from text by a top border -->
+      <div class="skills-block">
+        <p class="skills-heading">Core Skills</p>
         <div class="skills-wrap">
+          <!-- Each skill is an inline pill — hover turns it blue -->
           <span class="skill-pill">Media Monitoring</span>
           <span class="skill-pill">Campaign Planning</span>
           <span class="skill-pill">Media Relations</span>
@@ -253,218 +1370,438 @@
           <span class="skill-pill">Stakeholder Coordination</span>
           <span class="skill-pill">Policy Writing</span>
           <span class="skill-pill">Google &amp; Meta Ads</span>
-          <span class="skill-pill">Adobe InDesign</span>
+          <span class="skill-pill">Adobe InDesign · Canva</span>
           <span class="skill-pill">Generative AI Tools</span>
         </div>
       </div>
-      <div style="margin-top:2rem;">
-        <a href="https://drive.google.com/your-cv-link" class="btn-primary" target="_blank">Download CV ↓</a>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section id="experience">
-  <div class="fade-up">
-    <p class="section-label">Experience</p>
-    <h2 class="section-title">Where I've worked</h2>
-    <p class="section-subtitle">Across agencies, OTT platforms, research institutions, and tech companies.</p>
-  </div>
-  <div class="exp-grid fade-up">
+      <!-- Download CV button below skills
+           IMPORTANT: Replace the href with your actual Google Drive CV link -->
+      <div class="about-cta">
+        <a href="https://drive.google.com/file/d/1Joz40Y8jhbPZ5GJ5jgW8shA6f2mGqv69/view?usp=sharing" class="btn-primary" target="_blank">Download CV ↓</a>
+      </div>
+
+    </div><!-- end .about-content -->
+  </div><!-- end .about-grid -->
+</section><!-- end #about -->
+
+
+<!-- ======================================================
+     EXPERIENCE SECTION
+     ======================================================
+     A vertical list of experience items.
+     Each item: date/org on left, role title + bullets on right.
+     Separated by horizontal borders — clean, scannable.
+     ====================================================== -->
+<section id="experience" class="fade-in">
+  <p class="section-eyebrow">Experience</p>
+  <h2 class="section-title">Where I've worked</h2>
+  <p class="section-sub">Internships across PR agencies, OTT platforms, research institutions and tech firms.</p>
+
+  <div class="exp-list">
+
+    <!-- EXPERIENCE ITEM 1: Google / Mavericks -->
     <div class="exp-item">
-      <div class="exp-meta"><p class="exp-date">May – Jul 2026</p><p class="exp-org">Mavericks (Google Team)<br>Gurugram</p></div>
+      <!-- Left: date and organisation name -->
+      <div class="exp-meta">
+        <p class="exp-period">May – Jul 2026</p>
+        <!-- br tag = line break within the org text -->
+        <p class="exp-org">Mavericks (Google Team)<br>Gurugram</p>
+      </div>
+      <!-- Right: role + bullet points -->
       <div class="exp-content">
         <p class="exp-role">Public Relations Intern</p>
-        <ul class="exp-points">
+        <ul class="exp-bullets">
+          <!-- Each li gets a blue en-dash via CSS ::before pseudo-element -->
           <li>Tracked media coverage across YouTube, Instagram, Facebook &amp; X for high-profile Google events including Android launches</li>
-          <li>Identified 30+ tech journalists and domain-specific creators for targeted outreach campaigns</li>
+          <li>Identified 30+ tech journalists and domain-specific creators (EdTech, AgriTech) for targeted outreach campaigns</li>
           <li>Compiled weekly media intelligence reports analysing journalist activity and platform reach</li>
         </ul>
       </div>
     </div>
+
+    <!-- EXPERIENCE ITEM 2: WAVES OTT -->
     <div class="exp-item">
-      <div class="exp-meta"><p class="exp-date">Jan – Apr 2026</p><p class="exp-org">Prasar Bharati / WAVES OTT<br>Remote</p></div>
+      <div class="exp-meta">
+        <p class="exp-period">Jan – Apr 2026</p>
+        <p class="exp-org">Prasar Bharati / WAVES OTT<br>Remote</p>
+      </div>
       <div class="exp-content">
         <p class="exp-role">Campaign Planning Intern</p>
-        <ul class="exp-points">
+        <ul class="exp-bullets">
           <li>Led 360° brand awareness campaign for WAVES OTT; designed audience positioning strategy</li>
           <li>Primary survey of 200+ respondents; contributed to creative brief for digital outreach</li>
         </ul>
       </div>
     </div>
+
+    <!-- EXPERIENCE ITEM 3: IIT Madras -->
     <div class="exp-item">
-      <div class="exp-meta"><p class="exp-date">May – Aug 2025</p><p class="exp-org">IIT Madras<br>Chennai</p></div>
+      <div class="exp-meta">
+        <p class="exp-period">May – Aug 2025</p>
+        <p class="exp-org">IIT Madras<br>Chennai</p>
+      </div>
       <div class="exp-content">
         <p class="exp-role">ICSR Project Intern</p>
-        <ul class="exp-points">
+        <ul class="exp-bullets">
           <li>Coordinated field data collection across 4 districts with 33+ stakeholders</li>
-          <li>Drafted Privacy Policy &amp; T&amp;C for institutional chatbot; compiled cross-functional case documentation</li>
+          <li>Drafted Privacy Policy &amp; Terms and Conditions for institutional chatbot</li>
         </ul>
       </div>
     </div>
+
+    <!-- EXPERIENCE ITEM 4: Teachnook -->
     <div class="exp-item">
-      <div class="exp-meta"><p class="exp-date">Oct – Nov 2024</p><p class="exp-org">Teachnook<br>Bengaluru</p></div>
+      <div class="exp-meta">
+        <p class="exp-period">Oct – Nov 2024</p>
+        <p class="exp-org">Teachnook<br>Bengaluru</p>
+      </div>
       <div class="exp-content">
         <p class="exp-role">Marketing &amp; Communications Intern</p>
-        <ul class="exp-points">
+        <ul class="exp-bullets">
           <li>Designed SheLeads brand book — visual identity, tone of voice, integrated communication strategy</li>
-          <li>Managed paid campaigns on Google Ads &amp; Meta; daily publishing and community management</li>
+          <li>Managed paid campaigns on Google Ads &amp; Meta; daily social publishing and community management</li>
         </ul>
       </div>
     </div>
+
+    <!-- EXPERIENCE ITEM 5: Niti Tantra -->
     <div class="exp-item">
-      <div class="exp-meta"><p class="exp-date">Oct – Dec 2024</p><p class="exp-org">Niti Tantra<br>New Delhi</p></div>
+      <div class="exp-meta">
+        <p class="exp-period">Oct – Dec 2024</p>
+        <p class="exp-org">Niti Tantra<br>New Delhi</p>
+      </div>
       <div class="exp-content">
         <p class="exp-role">Policy Research Intern</p>
-        <ul class="exp-points">
+        <ul class="exp-bullets">
           <li>Authored 3 policy briefs covering MSME growth, electoral analysis, and bilateral relations</li>
         </ul>
       </div>
     </div>
-  </div>
-</section>
 
-<section id="portfolio">
-  <div class="fade-up">
-    <p class="section-label">Portfolio</p>
-    <h2 class="section-title">Proof of work</h2>
-    <p class="section-subtitle">Campaigns, media releases, crisis analyses, and research.</p>
+  </div><!-- end .exp-list -->
+</section><!-- end #experience -->
+
+
+<!-- ======================================================
+     PORTFOLIO SECTION
+     ======================================================
+     Filter buttons let visitors narrow by category.
+     6 cards in a 3-column grid.
+     Each card links to a PDF on Google Drive.
+     See the HOW TO ADD PDFs comment in the CSS above.
+     ====================================================== -->
+<section id="portfolio" class="fade-in">
+  <p class="section-eyebrow">Portfolio</p>
+  <h2 class="section-title">Proof of work</h2>
+  <p class="section-sub">Media releases, campaign case studies, crisis analyses, and research.</p>
+
+  <!-- Filter buttons — JavaScript filterPortfolio() function below handles the logic -->
+  <div class="filter-bar">
+    <!-- data-filter="all" → shows all cards -->
+    <button class="filter-btn active" onclick="filterPortfolio('all', this)">All</button>
+    <!-- data-filter values must match the data-cat values on port-card elements below -->
+    <button class="filter-btn" onclick="filterPortfolio('media-release', this)">Media Releases</button>
+    <button class="filter-btn" onclick="filterPortfolio('campaign', this)">Campaign Work</button>
+    <button class="filter-btn" onclick="filterPortfolio('crisis', this)">Crisis Analysis</button>
+    <button class="filter-btn" onclick="filterPortfolio('research', this)">Research</button>
   </div>
-  <div class="filter-row fade-up">
-    <button class="filter-btn active" onclick="filterPortfolio('all',this)">All</button>
-    <button class="filter-btn" onclick="filterPortfolio('media-release',this)">Media Releases</button>
-    <button class="filter-btn" onclick="filterPortfolio('campaign',this)">Campaign Work</button>
-    <button class="filter-btn" onclick="filterPortfolio('crisis',this)">Crisis Analysis</button>
-    <button class="filter-btn" onclick="filterPortfolio('research',this)">Research</button>
-  </div>
-  <div class="portfolio-grid fade-up" id="portfolioGrid">
+
+  <!-- Portfolio grid: 3 columns, 2 rows = 6 cards -->
+  <div class="portfolio-grid" id="portfolioGrid">
+
+    <!-- CARD 1: WAVES Campaign
+         data-cat="campaign" — this is how the filter knows which category this card belongs to
+         href="#" — replace with your Google Drive PDF link when ready -->
     <a class="port-card" data-cat="campaign" href="#" target="_blank">
       <p class="port-tag">Campaign Work</p>
       <h3 class="port-title">WAVES OTT — 360° Brand Launch</h3>
       <p class="port-desc">Audience positioning strategy built on 200+ respondent survey. Creative brief for digital and on-ground outreach. Prasar Bharati.</p>
-      <p class="port-coming">PDF uploading soon</p>
+      <!-- Change class to port-action and update text to "View PDF →" once PDF is ready -->
+      <p class="port-soon">PDF uploading soon</p>
     </a>
+
+    <!-- CARD 2: Greenwashing Research -->
     <a class="port-card" data-cat="research" href="#" target="_blank">
       <p class="port-tag">Research</p>
       <h3 class="port-title">Greenwashing in Indian Advertising</h3>
-      <p class="port-desc">Semantic-content analysis of sustainability claims across FMCG, Fashion, Auto &amp; Energy sectors (2020–2025).</p>
-      <p class="port-coming">PDF uploading soon</p>
+      <p class="port-desc">Semantic-content analysis of sustainability claims across FMCG, Fashion, Auto &amp; Energy sectors (2020–2025). IIMC Delhi.</p>
+      <p class="port-soon">PDF uploading soon</p>
     </a>
+
+    <!-- CARD 3: Zomato Media Release -->
     <a class="port-card" data-cat="media-release" href="#" target="_blank">
       <p class="port-tag">Media Release</p>
       <h3 class="port-title">Zomato Tier-3 City Expansion</h3>
-      <p class="port-desc">Full press release for a simulated Zomato expansion into Tier-3 markets — standard format, newswire-ready.</p>
-      <p class="port-coming">PDF uploading soon</p>
+      <p class="port-desc">Full press release for a simulated Zomato expansion into Tier-3 markets — standard AP format, newswire-ready.</p>
+      <p class="port-soon">PDF uploading soon</p>
     </a>
+
+    <!-- CARD 4: Byju's Crisis -->
     <a class="port-card" data-cat="crisis" href="#" target="_blank">
       <p class="port-tag">Crisis Analysis</p>
       <h3 class="port-title">Byju's PR Breakdown</h3>
       <p class="port-desc">What went wrong, what they communicated, and what they should have said. Structured crisis communication audit.</p>
-      <p class="port-coming">PDF uploading soon</p>
+      <p class="port-soon">PDF uploading soon</p>
     </a>
+
+    <!-- CARD 5: Media Pitch -->
     <a class="port-card" data-cat="media-release" href="#" target="_blank">
       <p class="port-tag">Media Pitch</p>
       <h3 class="port-title">Tech Startup Pitch Email</h3>
-      <p class="port-desc">Annotated journalist pitch for a B2B SaaS story — each line explained for why it works.</p>
-      <p class="port-coming">PDF uploading soon</p>
+      <p class="port-desc">Annotated journalist pitch for a B2B SaaS story. Each line explained — why this hook, why this angle, why this ask.</p>
+      <p class="port-soon">PDF uploading soon</p>
     </a>
+
+    <!-- CARD 6: Media Monitoring Report -->
     <a class="port-card" data-cat="research" href="#" target="_blank">
       <p class="port-tag">Media Monitoring</p>
       <h3 class="port-title">Brand Coverage Report — Mock</h3>
-      <p class="port-desc">One-week media monitoring report for a major FMCG brand. Sentiment analysis, platform breakdown, coverage gaps.</p>
-      <p class="port-coming">PDF uploading soon</p>
+      <p class="port-desc">One-week media monitoring report for a major FMCG brand. Platform breakdown, sentiment scoring, and coverage gap analysis.</p>
+      <p class="port-soon">PDF uploading soon</p>
     </a>
-  </div>
-</section>
 
-<section id="education">
-  <div class="fade-up">
-    <p class="section-label">Education</p>
-    <h2 class="section-title">Academic background</h2>
-  </div>
-  <div class="edu-grid fade-up">
+  </div><!-- end .portfolio-grid -->
+</section><!-- end #portfolio -->
+
+
+<!-- ======================================================
+     EDUCATION SECTION
+     ====================================================== -->
+<section id="education" class="fade-in">
+  <p class="section-eyebrow">Education</p>
+  <h2 class="section-title">Academic background</h2>
+
+  <div class="edu-list">
+
+    <!-- EDUCATION CARD 1: IIMC -->
     <div class="edu-card">
       <div>
+        <!-- Institution name: bold, large, navy -->
         <p class="edu-inst">Indian Institute of Mass Communication</p>
+        <!-- Degree description -->
         <p class="edu-degree">PG Diploma in Advertising &amp; Public Relations · New Delhi</p>
+        <!-- Special note: rank/honour in blue -->
         <p class="edu-note">🥇 1st Rank, First Semester</p>
       </div>
-      <div class="edu-meta"><p class="edu-year">Aug 2025 – Present</p><p class="edu-score">84.60%</p></div>
+      <!-- Right side: year and score displayed on the right -->
+      <div class="edu-meta">
+        <span class="edu-year">Aug 2025 – Present</span>
+        <span class="edu-score">84.6%</span>
+      </div>
     </div>
+
+    <!-- EDUCATION CARD 2: UoH -->
     <div class="edu-card">
       <div>
         <p class="edu-inst">University of Hyderabad</p>
         <p class="edu-degree">MA Political Science · Dissertation: India AI Policy Framework</p>
       </div>
-      <div class="edu-meta"><p class="edu-year">Jun 2023 – May 2025</p><p class="edu-score">8.51</p></div>
+      <div class="edu-meta">
+        <span class="edu-year">Jun 2023 – May 2025</span>
+        <span class="edu-score">8.51</span>
+      </div>
     </div>
+
+    <!-- EDUCATION CARD 3: DEI -->
     <div class="edu-card">
       <div>
         <p class="edu-inst">Dayalbagh Educational Institute, Agra</p>
         <p class="edu-degree">BA (Hons.) Political Science &amp; Economics Minor</p>
       </div>
-      <div class="edu-meta"><p class="edu-year">Jul 2020 – May 2023</p><p class="edu-score">8.34</p></div>
+      <div class="edu-meta">
+        <span class="edu-year">Jul 2020 – May 2023</span>
+        <span class="edu-score">8.34</span>
+      </div>
     </div>
-  </div>
-</section>
 
-<section id="writing">
-  <div class="fade-up">
-    <p class="section-label">Writing</p>
-    <h2 class="section-title">Thoughts on<br>communications</h2>
-    <p class="section-subtitle">Articles, analyses, and industry observations.</p>
-  </div>
-  <div class="writing-grid fade-up">
-    <div class="writing-item">
-      <div class="writing-num">01</div>
-      <div><p class="writing-title">What Indian Brands Got Wrong About PR in 2025</p><p class="writing-meta">LinkedIn Article · Coming soon</p></div>
-      <a href="#" class="writing-cta">Read →</a>
-    </div>
-    <div class="writing-item">
-      <div class="writing-num">02</div>
-      <div><p class="writing-title">AI Policy and the Challenge of Public Communication in India</p><p class="writing-meta">Based on UoH Dissertation · Coming soon</p></div>
-      <a href="#" class="writing-cta">Read →</a>
-    </div>
-    <div class="writing-item">
-      <div class="writing-num">03</div>
-      <div><p class="writing-title">Why Every PR Professional Should Understand Greenwashing</p><p class="writing-meta">LinkedIn Article · Coming soon</p></div>
-      <a href="#" class="writing-cta">Read →</a>
-    </div>
-  </div>
-</section>
+  </div><!-- end .edu-list -->
+</section><!-- end #education -->
 
-<section id="contact">
-  <div class="fade-up">
-    <div class="contact-avail">● Available from July 2026 · South India</div>
-    <h2 class="section-title">Let's work<br><em>together.</em></h2>
-    <p class="contact-sub">Open to PR, Corporate Communications, and Brand Communications roles<br>in Bengaluru · Chennai · Hyderabad</p>
-    <div class="contact-links">
-      <a href="mailto:bhoomisharma110@gmail.com" class="contact-btn gold">Email Me</a>
-      <a href="https://linkedin.com/in/bhoomi-sharma" class="contact-btn outline" target="_blank">LinkedIn</a>
-      <a href="https://drive.google.com/your-cv-link" class="contact-btn outline" target="_blank">Download CV</a>
+
+<!-- ======================================================
+     WRITING SECTION
+     ======================================================
+     A numbered list of articles.
+     Each row: number | title + platform | "Read →" link.
+     When you publish an article on LinkedIn:
+     1. Open the article in browser
+     2. Copy the URL from the address bar
+     3. Replace the href="#" with that URL
+     ====================================================== -->
+<section id="writing" class="fade-in">
+  <p class="section-eyebrow">Writing</p>
+  <h2 class="section-title">Thoughts on communications</h2>
+  <p class="section-sub">Articles and analysis published on LinkedIn. New piece every month.</p>
+
+  <div class="writing-list">
+
+    <div class="article-row">
+      <!-- Decorative number — faint, purely visual -->
+      <div class="article-num">01</div>
+      <div>
+        <p class="article-title">What Indian Brands Got Wrong About PR in 2025</p>
+        <p class="article-meta">LinkedIn Article · Coming soon</p>
+      </div>
+      <!-- Replace href="#" with your LinkedIn article URL when published -->
+      <a href="#" class="article-link">Read →</a>
     </div>
-    <div class="contact-divider"></div>
-    <p class="contact-email">bhoomisharma110@gmail.com</p>
+
+    <div class="article-row">
+      <div class="article-num">02</div>
+      <div>
+        <p class="article-title">AI Policy and the Challenge of Public Communication in India</p>
+        <p class="article-meta">Based on UoH Dissertation · Coming soon</p>
+      </div>
+      <a href="#" class="article-link">Read →</a>
+    </div>
+
+    <div class="article-row">
+      <div class="article-num">03</div>
+      <div>
+        <p class="article-title">Why Every PR Professional Should Understand Greenwashing</p>
+        <p class="article-meta">LinkedIn Article · Coming soon</p>
+      </div>
+      <a href="#" class="article-link">Read →</a>
+    </div>
+
+  </div><!-- end .writing-list -->
+</section><!-- end #writing -->
+
+
+<!-- ======================================================
+     CONTACT SECTION
+     ======================================================
+     Dark navy background — signals "end of page" and makes
+     the call-to-action feel urgent and final.
+     Three buttons: Email, LinkedIn, Download CV.
+     ====================================================== -->
+<section id="contact" class="fade-in">
+
+  <!-- Availability badge — same green dot logic as hero badge -->
+  <div class="contact-badge">
+    <div class="avail-dot" style="background:rgba(255,255,255,0.6);"></div>
+    Available from July 2026 · Bengaluru · Chennai · Hyderabad
   </div>
-</section>
 
-<footer>© 2026 Bhoomi Sharma · PR &amp; Communications</footer>
+  <h2 class="section-title">Let's work together.</h2>
 
+  <p class="contact-sub">
+    Open to PR, Corporate Communications, and Brand Communications roles in South India.<br>
+    IIMC Rank 1 · Currently with Google PR Team · Immediate joiner from July 2026.
+  </p>
+
+  <!-- Three buttons. All use same padding/size so they align perfectly. -->
+  <div class="contact-btns">
+    <!-- mailto: link opens the user's default email app with your address pre-filled -->
+    <a href="mailto:bhoomisharma110@gmail.com" class="btn-contact-primary">Email Me</a>
+    <!-- target="_blank" opens LinkedIn in a new tab — standard for external links -->
+    <a href="https://www.linkedin.com/authwall?trk=bf&trkInfo=AQFAE9VFhUexNQAAAZ5oMH4IFRKKPWqjRDHuT3udMYPlz75otWRVare3MRNkY1T7j7y8ONwMwUe7urwX4PDNzrU1pp1RVrXOCmi08LlNpjLqifrfffCNJMzhNObKTtQA4AXfihs=&original_referer=&sessionRedirect=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fbhoomi-sharma-081b1a302%2F" class="btn-contact-outline" target="_blank">LinkedIn</a>
+    <!-- Replace with your actual Google Drive CV link -->
+    <a href="https://drive.google.com/file/d/1Joz40Y8jhbPZ5GJ5jgW8shA6f2mGqv69/view?usp=sharing" class="btn-contact-outline" target="_blank">Download CV</a>
+  </div>
+
+  <!-- Email shown as plain text below buttons
+       Some hiring managers prefer to copy-paste rather than click -->
+  <p class="contact-email-display">bhoomisharma110@gmail.com</p>
+
+</section><!-- end #contact -->
+
+
+<!-- ======================================================
+     FOOTER
+     ====================================================== -->
+<footer>
+  <span>© 2026 Bhoomi Sharma · PR &amp; Communications</span>
+  <div class="footer-links">
+    <!-- These mirror the nav links for easy access at the bottom of the page -->
+    <a href="#home">Home</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+
+<!-- ======================================================
+     JAVASCRIPT
+     ======================================================
+     Three small functions:
+     1. Navbar shadow on scroll
+     2. Fade-in animation on scroll
+     3. Portfolio filter
+     ====================================================== -->
 <script>
+
+  // ── 1. NAVBAR SHADOW ON SCROLL ──────────────────────────
+  // When the user scrolls more than 10px down, we add the
+  // "scrolled" class to the nav element.
+  // The CSS for nav.scrolled adds a subtle box-shadow.
+  // This visually separates the navbar from the content as you scroll.
   window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+    const nav = document.getElementById('navbar');
+    if (window.scrollY > 10) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
+    }
   });
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+
+
+  // ── 2. FADE-IN ON SCROLL ────────────────────────────────
+  // IntersectionObserver watches elements with class "fade-in".
+  // When an element scrolls into the visible viewport area,
+  // we add the class "visible" — this triggers the CSS
+  // transition that fades it in and moves it up into place.
+  //
+  // threshold: 0.1 means the animation triggers when 10% of
+  // the element is visible — feels natural, not too early.
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
   }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
-  function filterPortfolio(cat, btn) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
+
+  // Apply the observer to every element with class "fade-in"
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+
+  // ── 3. PORTFOLIO FILTER ─────────────────────────────────
+  // Called when a filter button is clicked.
+  // Parameters:
+  //   category — string like "all", "campaign", "crisis" etc.
+  //   clickedBtn — reference to the button that was clicked
+  //
+  // Steps:
+  // a. Remove "active" class from ALL filter buttons
+  // b. Add "active" class to the clicked button (turns it blue)
+  // c. For each portfolio card:
+  //    — if category is "all" → show it
+  //    — if card's data-cat matches → show it
+  //    — otherwise → hide it
+  function filterPortfolio(category, clickedBtn) {
+
+    // a. Remove active from all buttons
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    // b. Add active to the clicked button
+    clickedBtn.classList.add('active');
+
+    // c. Show or hide each card based on its data-cat attribute
     document.querySelectorAll('.port-card').forEach(card => {
-      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'flex' : 'none';
+      const cardCategory = card.getAttribute('data-cat'); // e.g. "campaign"
+      if (category === 'all' || cardCategory === category) {
+        card.style.display = 'flex'; // show: flex because cards use display:flex
+      } else {
+        card.style.display = 'none'; // hide
+      }
     });
   }
+
 </script>
+
 </body>
 </html>

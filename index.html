@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhoomi Sharma — PR & Communications</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:       #0F2340;
+    --navy-mid:   #1A3C5E;
+    --blue:       #2563EB;
+    --blue-light: #DBEAFE;
+    --gold:       #C9A84C;
+    --gold-light: #FDF6E3;
+    --cream:      #FAF8F5;
+    --warm-grey:  #F0EDE8;
+    --mid-grey:   #9CA3AF;
+    --dark-text:  #1C1C1E;
+    --body-text:  #374151;
+    --border:     #E5E1DA;
+    --white:      #FFFFFF;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; background: var(--cream); color: var(--dark-text); overflow-x: hidden; }
+  .serif { font-family: 'Cormorant Garamond', serif; }
+  h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 600; line-height: 1.15; }
+
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5vw; height: 64px;
+    background: rgba(250,248,245,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border); transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 2px 20px rgba(15,35,64,0.08); }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: var(--navy); letter-spacing: 0.02em; text-decoration: none; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--body-text); text-decoration: none; transition: color 0.2s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--gold); transform: scaleX(0); transition: transform 0.25s; }
+  .nav-links a:hover { color: var(--navy); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta { background: var(--navy); color: var(--white) !important; padding: 0.45rem 1.2rem; border-radius: 2px; font-size: 0.75rem !important; }
+  .nav-cta:hover { background: var(--navy-mid) !important; }
+  .nav-cta::after { display: none !important; }
+
+  #home { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 64px; overflow: hidden; }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 6rem 5vw; }
+  .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--gold-light); border: 1px solid var(--gold); color: #7A5C1E; font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.85rem; border-radius: 2px; margin-bottom: 1.5rem; width: fit-content; }
+  .hero-name { font-size: clamp(3.5rem, 6vw, 5.5rem); color: var(--navy); line-height: 1.0; margin-bottom: 0.75rem; }
+  .hero-name em { font-style: italic; color: var(--gold); }
+  .hero-title { font-size: 1rem; font-weight: 400; color: var(--body-text); letter-spacing: 0.04em; margin-bottom: 1.5rem; text-transform: uppercase; }
+  .hero-desc { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: 1.2rem; line-height: 1.75; color: var(--body-text); max-width: 480px; margin-bottom: 2.5rem; }
+  .hero-desc strong { font-weight: 600; color: var(--navy); }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--navy); color: var(--white); padding: 0.85rem 2rem; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border: none; border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-block; transition: background 0.2s, transform 0.15s; }
+  .btn-primary:hover { background: var(--navy-mid); transform: translateY(-1px); }
+  .btn-outline { background: transparent; color: var(--navy); padding: 0.85rem 2rem; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border: 1.5px solid var(--navy); border-radius: 2px; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.2s; }
+  .btn-outline:hover { background: var(--navy); color: var(--white); }
+  .hero-right { position: relative; display: flex; align-items: center; justify-content: center; background: var(--navy); overflow: hidden; }
+  .hero-photo-wrap { position: relative; z-index: 2; width: 320px; height: 420px; border: 3px solid rgba(201,168,76,0.4); overflow: hidden; }
+  .hero-photo-placeholder { width: 100%; height: 100%; background: linear-gradient(160deg, #1A3C5E 0%, #0F2340 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; }
+  .avatar-initials { width: 100px; height: 100px; border-radius: 50%; background: rgba(201,168,76,0.2); border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--gold); font-weight: 600; }
+  .hero-photo-placeholder p { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
+  .hero-deco-line { position: absolute; top: 0; bottom: 0; left: -30px; width: 1px; background: rgba(201,168,76,0.3); }
+  .hero-stats { position: absolute; bottom: 3rem; right: 3rem; z-index: 3; display: flex; flex-direction: column; gap: 1rem; }
+  .stat-chip { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.15); padding: 0.6rem 1rem; border-radius: 2px; text-align: right; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; color: var(--gold); line-height: 1; }
+  .stat-lbl { font-size: 0.68rem; color: rgba(255,255,255,0.55); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  section { padding: 6rem 5vw; }
+  .section-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
+  .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--gold); }
+  .section-title { font-size: clamp(2.2rem, 4vw, 3.2rem); color: var(--navy); margin-bottom: 1rem; }
+  .section-subtitle { font-size: 1.05rem; color: var(--body-text); max-width: 560px; line-height: 1.7; }
+
+  #about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start; margin-top: 3.5rem; }
+  .about-photo-box { width: 100%; aspect-ratio: 3/4; max-width: 340px; background: var(--warm-grey); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 0.75rem; color: var(--mid-grey); font-size: 0.85rem; }
+  .about-photo-box .big-initial { font-family: 'Cormorant Garamond', serif; font-size: 5rem; color: var(--border); line-height: 1; }
+  .about-facts { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .fact-row { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.85rem; color: var(--body-text); }
+  .fact-row strong { min-width: 80px; font-weight: 500; color: var(--navy); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; padding-top: 1px; }
+  .about-text p { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; line-height: 1.8; color: var(--body-text); margin-bottom: 1.25rem; font-weight: 300; }
+  .about-text p strong { font-weight: 600; color: var(--navy); }
+  .skills-section { margin-top: 2.5rem; }
+  .skills-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--mid-grey); margin-bottom: 1rem; }
+  .skills-wrap { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .skill-pill { background: var(--cream); border: 1px solid var(--border); color: var(--navy); font-size: 0.78rem; font-weight: 400; padding: 0.35rem 0.9rem; border-radius: 40px; transition: all 0.2s; }
+  .skill-pill:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+  #experience { background: var(--cream); }
+  .exp-grid { margin-top: 3.5rem; }
+  .exp-item { display: grid; grid-template-columns: 200px 1fr; gap: 2rem; padding: 2rem 0; border-top: 1px solid var(--border); }
+  .exp-item:last-child { border-bottom: 1px solid var(--border); }
+  .exp-date { font-size: 0.75rem; font-weight: 500; color: var(--gold); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .exp-org { font-size: 0.82rem; color: var(--mid-grey); line-height: 1.4; }
+  .exp-role { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--navy); font-weight: 600; margin-bottom: 0.75rem; }
+  .exp-points { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .exp-points li { font-size: 0.88rem; color: var(--body-text); line-height: 1.6; padding-left: 1.2rem; position: relative; }
+  .exp-points li::before { content: '—'; position: absolute; left: 0; color: var(--gold); font-weight: 300; }
+
+  #portfolio { background: var(--navy); }
+  #portfolio .section-label { color: var(--gold); }
+  #portfolio .section-title { color: var(--white); }
+  #portfolio .section-subtitle { color: rgba(255,255,255,0.55); }
+  .filter-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 2.5rem; }
+  .filter-btn { background: transparent; border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.55); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 2px; cursor: pointer; transition: all 0.2s; font-family: 'Outfit', sans-serif; }
+  .filter-btn.active, .filter-btn:hover { background: var(--gold); border-color: var(--gold); color: var(--navy); }
+  .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+  .port-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); padding: 1.75rem; border-radius: 2px; cursor: pointer; transition: all 0.25s; display: flex; flex-direction: column; text-decoration: none; }
+  .port-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(201,168,76,0.4); transform: translateY(-3px); }
+  .port-tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.85rem; }
+  .port-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--white); margin-bottom: 0.6rem; line-height: 1.3; }
+  .port-desc { font-size: 0.82rem; color: rgba(255,255,255,0.45); line-height: 1.6; flex: 1; }
+  .port-link { margin-top: 1.25rem; font-size: 0.75rem; font-weight: 500; color: var(--gold); letter-spacing: 0.06em; text-transform: uppercase; display: flex; align-items: center; gap: 0.4rem; }
+  .port-link::after { content: '→'; }
+  .port-coming { margin-top: 1.25rem; font-size: 0.72rem; color: rgba(255,255,255,0.25); font-style: italic; }
+
+  #education { background: var(--white); }
+  .edu-grid { margin-top: 3.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .edu-card { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 1.5rem; padding: 1.75rem 2rem; border: 1px solid var(--border); border-left: 3px solid var(--gold); background: var(--cream); }
+  .edu-inst { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--navy); font-weight: 600; margin-bottom: 0.3rem; }
+  .edu-degree { font-size: 0.88rem; color: var(--body-text); margin-bottom: 0.3rem; }
+  .edu-note { font-size: 0.8rem; color: var(--gold); font-style: italic; }
+  .edu-meta { text-align: right; }
+  .edu-year { font-size: 0.75rem; color: var(--mid-grey); text-transform: uppercase; letter-spacing: 0.05em; }
+  .edu-score { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--navy); font-weight: 600; line-height: 1; }
+
+  #writing { background: var(--cream); }
+  .writing-grid { margin-top: 3rem; }
+  .writing-item { display: grid; grid-template-columns: 80px 1fr auto; gap: 1.5rem; align-items: center; padding: 1.5rem 0; border-top: 1px solid var(--border); }
+  .writing-item:last-child { border-bottom: 1px solid var(--border); }
+  .writing-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; color: var(--border); font-weight: 600; line-height: 1; }
+  .writing-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--navy); font-weight: 600; margin-bottom: 0.25rem; }
+  .writing-meta { font-size: 0.78rem; color: var(--mid-grey); }
+  .writing-cta { font-size: 0.75rem; font-weight: 500; color: var(--blue); text-transform: uppercase; letter-spacing: 0.06em; text-decoration: none; white-space: nowrap; }
+
+  #contact { background: var(--navy); text-align: center; padding: 7rem 5vw; }
+  .contact-avail { display: inline-block; background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4); color: var(--gold); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 2px; margin-bottom: 2rem; }
+  #contact .section-title { color: var(--white); font-size: clamp(2.5rem,5vw,4rem); margin-bottom: 1rem; }
+  .contact-sub { font-size: 1rem; color: rgba(255,255,255,0.5); margin-bottom: 3rem; }
+  .contact-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .contact-btn { padding: 0.85rem 2rem; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 2px; text-decoration: none; transition: all 0.2s; display: inline-block; }
+  .contact-btn.gold { background: var(--gold); color: var(--navy); border: 1.5px solid var(--gold); }
+  .contact-btn.gold:hover { background: #B8973B; }
+  .contact-btn.outline { background: transparent; color: white; border: 1.5px solid rgba(255,255,255,0.3); }
+  .contact-btn.outline:hover { border-color: white; }
+  .contact-divider { margin: 3.5rem auto; max-width: 80px; height: 1px; background: rgba(255,255,255,0.1); }
+  .contact-email { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: rgba(255,255,255,0.4); letter-spacing: 0.02em; }
+  footer { background: #080F18; color: rgba(255,255,255,0.3); text-align: center; padding: 1.5rem; font-size: 0.75rem; letter-spacing: 0.05em; }
+
+  .fade-up { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    #home { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 5rem 6vw 4rem; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-photo-box { display: none; }
+    .portfolio-grid { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .edu-card { grid-template-columns: 1fr; }
+    .edu-meta { text-align: left; }
+    .writing-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .writing-num { display: none; }
+    nav { padding: 0 4vw; }
+    .nav-links { gap: 1rem; }
+    .nav-links li:nth-child(-n+4) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="navbar">
+  <a href="#home" class="nav-logo">Bhoomi Sharma</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#writing">Writing</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+</nav>
+
+<section id="home">
+  <div class="hero-left">
+    <div class="hero-badge"><span>🥇</span> Rank 1 · IIMC New Delhi · ADPR</div>
+    <h1 class="hero-name">Bhoomi<br><em>Sharma</em></h1>
+    <p class="hero-title">PR &amp; Communications Professional</p>
+    <p class="hero-desc">I help brands <strong>say the right thing</strong> — to the right people, at the right moment. Currently supporting Google's PR team. Available for full-time roles in <strong>South India from July 2026.</strong></p>
+    <div class="hero-actions">
+      <a href="#portfolio" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-outline">Let's Talk</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-deco-line"></div>
+    <div class="hero-photo-wrap">
+      <div class="hero-photo-placeholder">
+        <div class="avatar-initials">BS</div>
+        <p>Add your photo here</p>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-chip"><div class="stat-num">4+</div><div class="stat-lbl">Internships</div></div>
+      <div class="stat-chip"><div class="stat-num">200+</div><div class="stat-lbl">Survey Respondents Led</div></div>
+      <div class="stat-chip"><div class="stat-num">33+</div><div class="stat-lbl">Stakeholders Managed</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="fade-up">
+    <p class="section-label">About Me</p>
+    <h2 class="section-title">The communicator<br>behind the work</h2>
+  </div>
+  <div class="about-grid fade-up">
+    <div class="about-left">
+      <div class="about-photo-box">
+        <div class="big-initial">B</div>
+        <span>Your photo here</span>
+      </div>
+      <div class="about-facts">
+        <div class="fact-row"><strong>Based</strong> New Delhi → Relocating South India</div>
+        <div class="fact-row"><strong>Available</strong> July 2026 · Immediate joiner</div>
+        <div class="fact-row"><strong>Languages</strong> English · Hindi</div>
+        <div class="fact-row"><strong>Institute</strong> IIMC New Delhi</div>
+      </div>
+    </div>
+    <div class="about-right">
+      <div class="about-text">
+        <p>I've always been drawn to the space between what organisations <strong>do</strong> and how the world <strong>understands</strong> them — that gap is where public relations lives.</p>
+        <p>Currently pursuing my PG Diploma in Advertising and PR at <strong>IIMC New Delhi</strong>, where I ranked first in my semester, I came to communications through a background in <strong>Political Science</strong> and a deep interest in how language shapes public perception.</p>
+        <p>Over the past two years I've worked across PR agencies, OTT platforms, research institutions, and tech firms — from supporting <strong>Google's PR team</strong> on media monitoring and influencer mapping, to leading campaign strategy for <strong>Prasar Bharati's WAVES OTT</strong>, to coordinating field research at <strong>IIT Madras</strong>.</p>
+        <p>I'm actively relocating to <strong>Bengaluru, Chennai, or Hyderabad</strong> and available for full-time PR and corporate communications roles from July 2026.</p>
+      </div>
+      <div class="skills-section">
+        <p class="skills-label">Core Skills</p>
+        <div class="skills-wrap">
+          <span class="skill-pill">Media Monitoring</span>
+          <span class="skill-pill">Campaign Planning</span>
+          <span class="skill-pill">Media Relations</span>
+          <span class="skill-pill">Brand Communication</span>
+          <span class="skill-pill">Crisis Analysis</span>
+          <span class="skill-pill">Content Strategy</span>
+          <span class="skill-pill">Influencer Mapping</span>
+          <span class="skill-pill">Stakeholder Coordination</span>
+          <span class="skill-pill">Policy Writing</span>
+          <span class="skill-pill">Google &amp; Meta Ads</span>
+          <span class="skill-pill">Adobe InDesign</span>
+          <span class="skill-pill">Generative AI Tools</span>
+        </div>
+      </div>
+      <div style="margin-top:2rem;">
+        <a href="https://drive.google.com/your-cv-link" class="btn-primary" target="_blank">Download CV ↓</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="fade-up">
+    <p class="section-label">Experience</p>
+    <h2 class="section-title">Where I've worked</h2>
+    <p class="section-subtitle">Across agencies, OTT platforms, research institutions, and tech companies.</p>
+  </div>
+  <div class="exp-grid fade-up">
+    <div class="exp-item">
+      <div class="exp-meta"><p class="exp-date">May – Jul 2026</p><p class="exp-org">Mavericks (Google Team)<br>Gurugram</p></div>
+      <div class="exp-content">
+        <p class="exp-role">Public Relations Intern</p>
+        <ul class="exp-points">
+          <li>Tracked media coverage across YouTube, Instagram, Facebook &amp; X for high-profile Google events including Android launches</li>
+          <li>Identified 30+ tech journalists and domain-specific creators for targeted outreach campaigns</li>
+          <li>Compiled weekly media intelligence reports analysing journalist activity and platform reach</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-meta"><p class="exp-date">Jan – Apr 2026</p><p class="exp-org">Prasar Bharati / WAVES OTT<br>Remote</p></div>
+      <div class="exp-content">
+        <p class="exp-role">Campaign Planning Intern</p>
+        <ul class="exp-points">
+          <li>Led 360° brand awareness campaign for WAVES OTT; designed audience positioning strategy</li>
+          <li>Primary survey of 200+ respondents; contributed to creative brief for digital outreach</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-meta"><p class="exp-date">May – Aug 2025</p><p class="exp-org">IIT Madras<br>Chennai</p></div>
+      <div class="exp-content">
+        <p class="exp-role">ICSR Project Intern</p>
+        <ul class="exp-points">
+          <li>Coordinated field data collection across 4 districts with 33+ stakeholders</li>
+          <li>Drafted Privacy Policy &amp; T&amp;C for institutional chatbot; compiled cross-functional case documentation</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-meta"><p class="exp-date">Oct – Nov 2024</p><p class="exp-org">Teachnook<br>Bengaluru</p></div>
+      <div class="exp-content">
+        <p class="exp-role">Marketing &amp; Communications Intern</p>
+        <ul class="exp-points">
+          <li>Designed SheLeads brand book — visual identity, tone of voice, integrated communication strategy</li>
+          <li>Managed paid campaigns on Google Ads &amp; Meta; daily publishing and community management</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-meta"><p class="exp-date">Oct – Dec 2024</p><p class="exp-org">Niti Tantra<br>New Delhi</p></div>
+      <div class="exp-content">
+        <p class="exp-role">Policy Research Intern</p>
+        <ul class="exp-points">
+          <li>Authored 3 policy briefs covering MSME growth, electoral analysis, and bilateral relations</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="portfolio">
+  <div class="fade-up">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-title">Proof of work</h2>
+    <p class="section-subtitle">Campaigns, media releases, crisis analyses, and research.</p>
+  </div>
+  <div class="filter-row fade-up">
+    <button class="filter-btn active" onclick="filterPortfolio('all',this)">All</button>
+    <button class="filter-btn" onclick="filterPortfolio('media-release',this)">Media Releases</button>
+    <button class="filter-btn" onclick="filterPortfolio('campaign',this)">Campaign Work</button>
+    <button class="filter-btn" onclick="filterPortfolio('crisis',this)">Crisis Analysis</button>
+    <button class="filter-btn" onclick="filterPortfolio('research',this)">Research</button>
+  </div>
+  <div class="portfolio-grid fade-up" id="portfolioGrid">
+    <a class="port-card" data-cat="campaign" href="#" target="_blank">
+      <p class="port-tag">Campaign Work</p>
+      <h3 class="port-title">WAVES OTT — 360° Brand Launch</h3>
+      <p class="port-desc">Audience positioning strategy built on 200+ respondent survey. Creative brief for digital and on-ground outreach. Prasar Bharati.</p>
+      <p class="port-coming">PDF uploading soon</p>
+    </a>
+    <a class="port-card" data-cat="research" href="#" target="_blank">
+      <p class="port-tag">Research</p>
+      <h3 class="port-title">Greenwashing in Indian Advertising</h3>
+      <p class="port-desc">Semantic-content analysis of sustainability claims across FMCG, Fashion, Auto &amp; Energy sectors (2020–2025).</p>
+      <p class="port-coming">PDF uploading soon</p>
+    </a>
+    <a class="port-card" data-cat="media-release" href="#" target="_blank">
+      <p class="port-tag">Media Release</p>
+      <h3 class="port-title">Zomato Tier-3 City Expansion</h3>
+      <p class="port-desc">Full press release for a simulated Zomato expansion into Tier-3 markets — standard format, newswire-ready.</p>
+      <p class="port-coming">PDF uploading soon</p>
+    </a>
+    <a class="port-card" data-cat="crisis" href="#" target="_blank">
+      <p class="port-tag">Crisis Analysis</p>
+      <h3 class="port-title">Byju's PR Breakdown</h3>
+      <p class="port-desc">What went wrong, what they communicated, and what they should have said. Structured crisis communication audit.</p>
+      <p class="port-coming">PDF uploading soon</p>
+    </a>
+    <a class="port-card" data-cat="media-release" href="#" target="_blank">
+      <p class="port-tag">Media Pitch</p>
+      <h3 class="port-title">Tech Startup Pitch Email</h3>
+      <p class="port-desc">Annotated journalist pitch for a B2B SaaS story — each line explained for why it works.</p>
+      <p class="port-coming">PDF uploading soon</p>
+    </a>
+    <a class="port-card" data-cat="research" href="#" target="_blank">
+      <p class="port-tag">Media Monitoring</p>
+      <h3 class="port-title">Brand Coverage Report — Mock</h3>
+      <p class="port-desc">One-week media monitoring report for a major FMCG brand. Sentiment analysis, platform breakdown, coverage gaps.</p>
+      <p class="port-coming">PDF uploading soon</p>
+    </a>
+  </div>
+</section>
+
+<section id="education">
+  <div class="fade-up">
+    <p class="section-label">Education</p>
+    <h2 class="section-title">Academic background</h2>
+  </div>
+  <div class="edu-grid fade-up">
+    <div class="edu-card">
+      <div>
+        <p class="edu-inst">Indian Institute of Mass Communication</p>
+        <p class="edu-degree">PG Diploma in Advertising &amp; Public Relations · New Delhi</p>
+        <p class="edu-note">🥇 1st Rank, First Semester</p>
+      </div>
+      <div class="edu-meta"><p class="edu-year">Aug 2025 – Present</p><p class="edu-score">84.60%</p></div>
+    </div>
+    <div class="edu-card">
+      <div>
+        <p class="edu-inst">University of Hyderabad</p>
+        <p class="edu-degree">MA Political Science · Dissertation: India AI Policy Framework</p>
+      </div>
+      <div class="edu-meta"><p class="edu-year">Jun 2023 – May 2025</p><p class="edu-score">8.51</p></div>
+    </div>
+    <div class="edu-card">
+      <div>
+        <p class="edu-inst">Dayalbagh Educational Institute, Agra</p>
+        <p class="edu-degree">BA (Hons.) Political Science &amp; Economics Minor</p>
+      </div>
+      <div class="edu-meta"><p class="edu-year">Jul 2020 – May 2023</p><p class="edu-score">8.34</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="writing">
+  <div class="fade-up">
+    <p class="section-label">Writing</p>
+    <h2 class="section-title">Thoughts on<br>communications</h2>
+    <p class="section-subtitle">Articles, analyses, and industry observations.</p>
+  </div>
+  <div class="writing-grid fade-up">
+    <div class="writing-item">
+      <div class="writing-num">01</div>
+      <div><p class="writing-title">What Indian Brands Got Wrong About PR in 2025</p><p class="writing-meta">LinkedIn Article · Coming soon</p></div>
+      <a href="#" class="writing-cta">Read →</a>
+    </div>
+    <div class="writing-item">
+      <div class="writing-num">02</div>
+      <div><p class="writing-title">AI Policy and the Challenge of Public Communication in India</p><p class="writing-meta">Based on UoH Dissertation · Coming soon</p></div>
+      <a href="#" class="writing-cta">Read →</a>
+    </div>
+    <div class="writing-item">
+      <div class="writing-num">03</div>
+      <div><p class="writing-title">Why Every PR Professional Should Understand Greenwashing</p><p class="writing-meta">LinkedIn Article · Coming soon</p></div>
+      <a href="#" class="writing-cta">Read →</a>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="fade-up">
+    <div class="contact-avail">● Available from July 2026 · South India</div>
+    <h2 class="section-title">Let's work<br><em>together.</em></h2>
+    <p class="contact-sub">Open to PR, Corporate Communications, and Brand Communications roles<br>in Bengaluru · Chennai · Hyderabad</p>
+    <div class="contact-links">
+      <a href="mailto:bhoomisharma110@gmail.com" class="contact-btn gold">Email Me</a>
+      <a href="https://linkedin.com/in/bhoomi-sharma" class="contact-btn outline" target="_blank">LinkedIn</a>
+      <a href="https://drive.google.com/your-cv-link" class="contact-btn outline" target="_blank">Download CV</a>
+    </div>
+    <div class="contact-divider"></div>
+    <p class="contact-email">bhoomisharma110@gmail.com</p>
+  </div>
+</section>
+
+<footer>© 2026 Bhoomi Sharma · PR &amp; Communications</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+  });
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+  function filterPortfolio(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.port-card').forEach(card => {
+      card.style.display = (cat === 'all' || card.dataset.cat === cat) ? 'flex' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
